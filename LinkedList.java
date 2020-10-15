@@ -12,6 +12,7 @@ public class LinkedList<E>
             next = null;
         }
     }
+    
     Node<E> head;
     int size;
     public LinkedList()
@@ -28,12 +29,12 @@ public class LinkedList<E>
             head = new Node(item);
             ++size;
         }else{
-            Node prev = head;
-            for(int i =0;i<size;i++)
+            Node<E> prev = head;
+            while( prev.next != null)
             {
                 prev = prev.next;
             }
-            Node node = new Node(item);
+            Node<E> node = new Node(item);
             prev.next = node;
             ++size;
         }
@@ -43,50 +44,53 @@ public class LinkedList<E>
     {
         if(position ==0)
         {
-            Node node = new Node (item);
+            Node<E> node = new Node(item);
             node.next = head;
             head = node;
             ++size;
         }else{
-            Node prev = head;
+            Node<E> prev = head;
             for (int i=0;i<position-1;i++)
             {
                 prev = prev.next;
             }
-            Node node = new Node(item);
+            Node<E> node = new Node<E>(item);
             node.next = prev.next;
             prev.next = node;
             ++size;
         }
     }
 
-    public Node<E> get(int position)
+    public E get(int position)
     {
-        Node curr = head;
+        if(position>0||position>=size)
+        {
+            return null;
+        }
+        Node<E> curr = head;
         for (int i =0;i<position;i++)
         {
             curr = curr.next;
         }
-        System.out.println(curr.next);
         return curr.next;
     }
 
-    public Node<E> remove(int position)
+    public E remove(int position)
     {
         if(position ==0)
         {
-            Node node = head;
+            Node<E> node = head;
             head = head.next;
             --size;
             return node.data;
         }
         else{
-            Node prev = head;
+            Node<E> prev = head;
             for(int i=0;i<position-1;i++)
             {
                 prev = prev.next;
             }
-            Node node = prev.next;
+            Node<E> node = prev.next;
             prev.next= node.next;
             --size;
             System.out.println(node.data);
@@ -94,11 +98,11 @@ public class LinkedList<E>
         }
     }
 
-    public Node<E> reverse(E head)
+    public Node<E> reverse(Node<E> head)
     {
-        Node prev = null;
-        Node curr = head;
-        Node next = null;
+        Node<E> prev = null;
+        Node<E> curr = head;
+        Node<E> next = null;
         while(curr!=null)
         {
             next = curr.next;
@@ -109,16 +113,29 @@ public class LinkedList<E>
         head = prev;
         return head;
     }
-    
 
+    public void printList()
+    {
+        Node<E> node = head;
+        while (node != null)
+        {
+            System.out.print(node.data+ " ");
+            node = node.next;
+        }
+    }
+    
     public static void main(String[] args)
     {
         LinkedList list = new LinkedList();
         list.add(4);
         list.add(5,1);
-        System.out.println(list.toString());
-        list.reverse(head);
-
+        list.add(7);
+        list.add(2,3);
+        list.remove(3);
+        list.printList();
+        list.head = list.reverse(list.head);
+        System.out.println();
+        list.printList();
     }
 
 }
