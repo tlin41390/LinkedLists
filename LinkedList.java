@@ -63,7 +63,7 @@ public class LinkedList<E>
 
     public E get(int position)
     {
-        if(position>0||position>=size)
+        if(position<0||position>=size)
         {
             return null;
         }
@@ -72,11 +72,15 @@ public class LinkedList<E>
         {
             curr = curr.next;
         }
-        return curr.next;
+        return curr.data;
     }
 
     public E remove(int position)
     {
+		if(position <0|| position>= size)
+		{
+			return null;
+		}
         if(position ==0)
         {
             Node<E> node = head;
@@ -119,7 +123,7 @@ public class LinkedList<E>
         Node<E> node = head;
         while (node != null)
         {
-            System.out.print(node.data+ " ");
+            System.out.print(node.data+ "->");
             node = node.next;
         }
     }
@@ -127,11 +131,17 @@ public class LinkedList<E>
     public static void main(String[] args)
     {
         LinkedList list = new LinkedList();
-        list.add(4);
-        list.add(5,1);
-        list.add(7);
+		list.add(4);
+		list.printList();
+		System.out.println();
+		list.add(5,1);
+		list.printList();
+		System.out.println();
+		list.add(7);
+		list.printList();
         list.add(2,3);
-        list.remove(3);
+		list.remove(3);
+		System.out.println(list.get(1));
         list.printList();
         list.head = list.reverse(list.head);
         System.out.println();
